@@ -1,4 +1,5 @@
 require_relative "tile"
+require 'pry'
 
 class Board
   def self.empty_grid

@@ -21,7 +21,7 @@ class SudokuGame
       print "> "
 
       begin
-        p = parse_inanity(gets.chomp)
+        p = parse_pos(gets.chomp)
       rescue
         puts "Invalid position entered (did you use a comma?)"
         puts ""
@@ -37,16 +37,16 @@ class SudokuGame
     until v && legal_illegibility_of_v?(v)
       puts "Please enter a value between 1 and 9 (0 to clear the tile)"
       print "> "
-      v = parse_insanity(gets.chomp)
+      v = parse_value(gets.chomp)
     end
     v
   end
 
-  def parse_inanity(string)
+  def parse_pos(string)
     string.split(",").map { |char| Integer(char) }
   end
 
-  def parse_insanity(string)
+  def parse_value(string)
     Integer(string)
   end
 
@@ -58,8 +58,11 @@ class SudokuGame
     board[p] = v
   end
 
-  def commence_proceedings
-    process_parameters until board_process_terminates?
+  def run
+    until board_process_terminates?
+      board.render
+      process_parameters
+    end  
     puts "Congratulations, you win!"
   end
 
@@ -84,4 +87,4 @@ end
 
 
 game = SudokuGame.from_file("puzzles/sudoku1.txt")
-game.commence_proceedings
+game.run
